@@ -8,5 +8,5 @@
 
 # Other #
 #########
-*.log
+.log
 /dist/
