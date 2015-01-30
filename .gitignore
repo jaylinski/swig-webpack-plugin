@@ -1,8 +1,12 @@
 # Vendor files #
 ################
 /node_modules/
-/dist/
 
 # Project files #
 #################
 .project
+
+# Other #
+#########
+*.log
+/dist/
