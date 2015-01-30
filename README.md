@@ -1,4 +1,4 @@
-[swig](https://github.com/paularmstrong/swig)-webpack-plugin
+[swig](https://github.com/paularmstrong/swig)-[webpack](https://github.com/webpack/webpack)-plugin
 ===================
 
 > **Note:** forked from [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin).
@@ -35,19 +35,8 @@ var webpackConfig = {
 }
 ```
 
-This will generate a file `index.html` containing the following:
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title>Webpack App</title>
-  </head>
-  <body>
-    <script src="[name].js"></script>
-  </body>
-</html>
-```
+This will generate a file `index.html` from the default template.
+
 
 If you have multiple webpack entry points, they will all be included with `script`
 tags in the generated HTML.
