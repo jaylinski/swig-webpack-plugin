@@ -49,7 +49,6 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 SwigWebpackPlugin.prototype.emitHtml = function(compiler, htmlTemplateFile, htmlTemplateContent, templateParams, outputFilename) {
   var template;
   swig.setDefaults(swigOptions);
-  console.log(templateParams);
   if(htmlTemplateFile) {
   	template = swig.compileFile(htmlTemplateFile);
   } else if(htmlTemplateContent) {
