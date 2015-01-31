@@ -1,6 +1,6 @@
 {
   "name": "swig-webpack-plugin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Simplifies creation of HTML files to serve your webpack bundles.",
   "main": "index.js",
   "repository": {

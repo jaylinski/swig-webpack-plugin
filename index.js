@@ -28,7 +28,7 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
       self.emitHtml(compiler, null, self.options.templateContent, templateParams, outputFilename);
       callback();
     } else {
-      var templateFile = self.options.template;
+      var templateFile = path.join(this.context, self.options.template);
       if (!templateFile) {
         templateFile = path.join(__dirname, 'template/index.html');
       }
