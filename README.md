@@ -49,6 +49,7 @@ Allowed values are as follows:
 
 - `beautify`: Beautify the HTML.
 - `uglify`: Uglify the HTML.
+- `watch`: add files to webpack's file-dependencies
 - `filename`: The file to write the HTML to. Defaults to `index.html`.
    You can specify a subdirectory here too (eg: `src/admin.html`).
 
