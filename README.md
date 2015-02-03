@@ -62,7 +62,8 @@ Here's an example webpack config illustrating how to use these options:
   },
   plugins: [
     new SwigWebpackPlugin({
-      filename 'src/admin.html',
+      filename 'src/*.html',
+      watch: 'src/**/*',
       beautify: true
     })
   ]
