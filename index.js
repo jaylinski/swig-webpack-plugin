@@ -108,20 +108,28 @@ SwigWebpackPlugin.prototype.htmlFormatter = function(options, html) {
 };
 
 SwigWebpackPlugin.prototype.swigWebpackPluginAssets = function(compiler, webpackStatsJson) {
-	var assets = {};
+	var assets = {
+		extensions: {}
+	};
+
 	for (var chunk in webpackStatsJson.assetsByChunkName) {
-		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
+		var chunkFiles = [].concat(webpackStatsJson.assetsByChunkName[chunk])
+			.map(function (fileName) {
+				if (compiler.options.output.publicPath) {
+					return compiler.options.output.publicPath + fileName;
+				}
 
-		// Webpack outputs an array for each chunk when using sourcemaps
-		if (chunkValue instanceof Array) {
-			// Is the main bundle always the first element?
-			chunkValue = chunkValue[0];
-		}
+				return fileName;
+			});
 
-		if (compiler.options.output.publicPath) {
-			chunkValue = compiler.options.output.publicPath + chunkValue;
-		}
-		assets[chunk] = chunkValue;
+		assets[chunk] = chunkFiles[0];
+
+		chunkFiles.forEach(function (chunkFile) {
+			var ext = chunkFile.split('.').pop();
+
+			assets.extensions[ext] = assets.extensions[ext] || [];
+			assets.extensions[ext].push(chunkFile);
+		});
 	}
 
 	return assets;
