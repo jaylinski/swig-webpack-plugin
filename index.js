@@ -27,10 +27,10 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 		var context = this.context;
 
 		if (self.options.watch) {
-			var watchFiles = glob.sync(self.options.watch, {});
+			var watchFiles = glob.sync(path.join(context, self.options.watch), {});
 			if(watchFiles.length > 0) {
 				watchFiles.forEach(function(file) {
-					compiler.fileDependencies.push(path.join(context, file));
+					compiler.fileDependencies.push(file);
 				});
 				watchTemplate = false;
 			} else {
@@ -54,7 +54,7 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 			if (files.length > 0) {
 				files.forEach(function(template) {
 					if(watchTemplate) {
-						compiler.fileDependencies.push(path.join(context, template));
+						compiler.fileDependencies.push(template);
 					}
 					var data = fs.readFileSync(template, 'utf8');
 					if (data) {
