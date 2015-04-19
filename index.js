@@ -27,10 +27,10 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 		var context = this.context;
 
 		if (self.options.watch) {
-			var watchFiles = glob.sync(self.options.watch, {});
+			var watchFiles = glob.sync(path.join(context, self.options.watch), {root: context, realpath: true});
 			if(watchFiles.length > 0) {
 				watchFiles.forEach(function(file) {
-					compiler.fileDependencies.push(path.join(context, file));
+					compiler.fileDependencies.push(file);
 				});
 				watchTemplate = false;
 			} else {
@@ -45,16 +45,18 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 			self.emitHtml(compiler, null, self.options.templateContent, templateParams, outputFilename);
 			callback();
 		} else {
-			var templateFile = path.join(context, self.options.template);
+			var templateFile = self.options.template;
+			var templateContext = context;
 			if (!templateFile) {
-				templateFile = path.join(__dirname, 'template/index.html');
+				templateFile = '/template/index.html';
+				templateContext = __dirname;
 			}
 			
-			var files = glob.sync(templateFile, {});
+			var files = glob.sync(templateFile, {root: templateContext, realpath: true});
 			if (files.length > 0) {
 				files.forEach(function(template) {
 					if(watchTemplate) {
-						compiler.fileDependencies.push(path.join(context, template));
+						compiler.fileDependencies.push(template);
 					}
 					var data = fs.readFileSync(template, 'utf8');
 					if (data) {
@@ -108,20 +110,28 @@ SwigWebpackPlugin.prototype.htmlFormatter = function(options, html) {
 };
 
 SwigWebpackPlugin.prototype.swigWebpackPluginAssets = function(compiler, webpackStatsJson) {
-	var assets = {};
+	var assets = {
+		extensions: {}
+	};
+
 	for (var chunk in webpackStatsJson.assetsByChunkName) {
-		var chunkValue = webpackStatsJson.assetsByChunkName[chunk];
+		var chunkFiles = [].concat(webpackStatsJson.assetsByChunkName[chunk])
+			.map(function (fileName) {
+				if (compiler.options.output.publicPath) {
+					return compiler.options.output.publicPath + fileName;
+				}
 
-		// Webpack outputs an array for each chunk when using sourcemaps
-		if (chunkValue instanceof Array) {
-			// Is the main bundle always the first element?
-			chunkValue = chunkValue[0];
-		}
+				return fileName;
+			});
 
-		if (compiler.options.output.publicPath) {
-			chunkValue = compiler.options.output.publicPath + chunkValue;
-		}
-		assets[chunk] = chunkValue;
+		assets[chunk] = chunkFiles[0];
+
+		chunkFiles.forEach(function (chunkFile) {
+			var ext = chunkFile.split('.').pop();
+
+			assets.extensions[ext] = assets.extensions[ext] || [];
+			assets.extensions[ext].push(chunkFile);
+		});
 	}
 
 	return assets;
