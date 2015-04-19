@@ -27,7 +27,7 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 		var context = this.context;
 
 		if (self.options.watch) {
-			var watchFiles = glob.sync(path.join(context, self.options.watch), {});
+			var watchFiles = glob.sync(path.join(context, self.options.watch), {root: context, realpath: true});
 			if(watchFiles.length > 0) {
 				watchFiles.forEach(function(file) {
 					compiler.fileDependencies.push(file);
@@ -45,12 +45,14 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 			self.emitHtml(compiler, null, self.options.templateContent, templateParams, outputFilename);
 			callback();
 		} else {
-			var templateFile = path.join(context, self.options.template);
+			var templateFile = self.options.template;
+			var templateContext = context;
 			if (!templateFile) {
-				templateFile = path.join(__dirname, 'template/index.html');
+				templateFile = '/template/index.html';
+				templateContext = __dirname;
 			}
 			
-			var files = glob.sync(templateFile, {});
+			var files = glob.sync(templateFile, {root: templateContext, realpath: true});
 			if (files.length > 0) {
 				files.forEach(function(template) {
 					if(watchTemplate) {
