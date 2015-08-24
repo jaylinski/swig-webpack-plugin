@@ -1,5 +1,7 @@
-[swig](https://github.com/paularmstrong/swig)-[webpack](https://github.com/webpack/webpack)-plugin
-===================
+# [swig](https://github.com/paularmstrong/swig)-[webpack](https://github.com/webpack/webpack)-plugin
+
+
+> **Note:** since [swig](https://github.com/paularmstrong/swig) isn't maintained anymore, this plugin will not receive any new features.
 
 > **Note:** forked from [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin).
 
@@ -8,16 +10,15 @@ webpack bundles. This is especially useful for webpack bundles that include
 a hash in the filename which changes every compilation. You can either let the plugin generate an HTML file for you or supply
 your own template (using [swig](https://github.com/paularmstrong/swig)).
 
-Installation
-------------
+## Installation
+
 Install the plugin with npm:
 ```shell
 $ npm install swig-webpack-plugin --save-dev
 ```
 
 
-Basic Usage
------------
+## Basic Usage
 
 The plugin will generate an HTML file for you that includes all your webpack
 bundles in the body using `script` tags. Just add the plugin to your webpack
@@ -37,13 +38,12 @@ var webpackConfig = {
 
 This will generate a file `index.html` from the default template.
 
-
 If you have multiple webpack entry points, they will all be included with `script`
 tags in the generated HTML.
 
 
-Configuration
--------------
+## Configuration
+
 You can pass a hash of configuration options to `HtmlWebpackPlugin`.
 Allowed values are as follows:
 
@@ -52,6 +52,7 @@ Allowed values are as follows:
 - `watch`: add files to webpack's file-dependencies
 - `filename`: The file to write the HTML to. Defaults to `index.html`.
    You can specify a subdirectory here too (eg: `src/admin.html`).
+- `data`: Any data you want to pass to your swig templates. It will be available as {{data.myvariable}} in your templates.
 
 Here's an example webpack config illustrating how to use these options:
 ```javascript
@@ -65,14 +66,17 @@ Here's an example webpack config illustrating how to use these options:
     new SwigWebpackPlugin({
       filename: 'src/*.html',
       watch: 'src/**/*',
-      beautify: true
+      beautify: true,
+      data: {
+      	myvariable: 'myvalue'
+      }
     })
   ]
 }
 ```
 
-Generating Multiple HTML Files
-------------------------------
+## Generating Multiple HTML Files
+
 To generate more than one HTML file, declare the plugin more than
 once in your plugins array:
 ```javascript
@@ -92,8 +96,8 @@ once in your plugins array:
 }
 ```
 
-Writing Your Own Templates
---------------------------
+## Writing Your Own Templates
+
 If the default generated HTML doesn't meet your needs you can supply
 your own [swig template](https://github.com/paularmstrong/swig).
 The [default template](https://github.com/jaylinski/swig-webpack-plugin/blob/master/template/index.html)
@@ -125,5 +129,5 @@ plugins: [
 ]
 ```
 
-Note the plugin will throw an error if you specify both `template` _and_
-`templateContent`.
+Note the plugin will throw an error if you specify both `template` _and_ `templateContent`.
+
