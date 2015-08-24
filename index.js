@@ -21,6 +21,7 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 		templateParams.swigWebpackPlugin = {};
 		templateParams.swigWebpackPlugin.assets = self.swigWebpackPluginAssets(compiler, webpackStatsJson);
 		templateParams.swigWebpackPlugin.options = self.options;
+		templateParams.data = self.options.data || null;
 
 		var outputFilename = self.options.filename || 'index.html';
 		var watchTemplate = true;
