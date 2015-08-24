@@ -22,14 +22,14 @@
   },
   "homepage": "https://github.com/jaylinski/swig-webpack-plugin",
   "devDependencies": {
-    "jshint": "^2.7.0",
-    "rimraf": "^2.3.2",
-    "webpack": "1.8.*"
+    "jshint": "^2.8.0",
+    "rimraf": "^2.4.2",
+    "webpack": "^1.11.0"
   },
   "dependencies": {
-    "glob": "^5.0.5",
+    "glob": "^5.0.14",
     "swig": "~1.4.2",
     "html-minifier": "^0.7.2",
-    "js-beautify": "^1.5.5"
+    "js-beautify": "^1.5.10"
   }
 }
