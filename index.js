@@ -28,7 +28,7 @@ SwigWebpackPlugin.prototype.apply = function(compiler) {
 		var context = this.context;
 
 		if (self.options.watch) {
-			var watchFiles = glob.sync(path.join(context, self.options.watch), {root: context, realpath: true});
+			var watchFiles = glob.sync(path.join(context, self.options.watch));
 			if(watchFiles.length > 0) {
 				watchFiles.forEach(function(file) {
 					compiler.fileDependencies.push(file);
